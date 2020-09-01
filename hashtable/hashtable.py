@@ -77,18 +77,12 @@ class HashTable:
         Hash collisions should be handled with Linked List Chaining.
         Implement this.
         """
-        # Hash index creates the index value based on the key
         index = self.hash_index(key)
-        # create new LL item
         hst = HashTableEntry(key, value)
-        # find this position in index
         node = self.data[index]
-        # if the node exists already, we need to traverse the list
-        # and check the next node.
         if node is not None:
             self.data[index] = hst
             self.data[index].next = node
-        # Otherwise we need to put the thing here.
         else:
             self.data[index] = hst
 
@@ -136,7 +130,16 @@ class HashTable:
         rehashes all key/value pairs.
         Implement this.
         """
-        # Your code here
+        old_data = self.data
+        old_capacity = self.capacity
+        self.data = [None] * new_capacity
+        self.capacity = new_capacity
+        for i in range(old_capacity):
+            node = old_data[i]
+            while node:
+                self.put(node.key, node.value)
+                node = node.next
+        
 
 
 
